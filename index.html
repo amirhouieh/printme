@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<title> GVA(poster) </title>
+	<link rel="stylesheet" href="style_2.css" type="text/css" media="screen" charset="utf-8" />
+
+	<script type="text/javascript" src="csi/jquery.min.js"></script>
+	<script type="text/javascript" src="csi/jquery-ui-effects.min.js"></script>
+	<script type="text/javascript">
+		var rectangleColors = [ 'black', 'magenta', 'cyan', 'yellow', 'red', 'blue', 'green' ];
+		var minRectangleSize = { width: 40, height: 20 };
+		var maxRectangleSize = { width: 200, height: 400 };
+		var fibo = [];
+ 		// var random = { 'A':["/","*"], 'B':["'em'", "'px'", " '%'"] }; 
+		
+				
+		function Fibo(j) {
+			if ( j === -1) {
+				j = 0;
+			}
+			if ( j === 0 || j === 1 ) { fibo[j] = j; }
+			
+			else { fibo[j] = fibo[j-1] + fibo[j-2] ; }
+			
+		return fibo[j];
+		
+		}
+		
+		function updateRectangle( rectangle, j, k ) {
+					
+			rectangle.css( {
+				'top': Math.ceil ( ( Fibo(k) * 1.41428571429 )) + Fibo( (k-1) )   + 'px',
+				'left':  Math.ceil ( ( Fibo(j) + Fibo( (j-1) ) ) ) + 'px'
+				} );
+				
+		}
+
+		
+		function optRandomizer (fibo) {
+		
+			var opt = Math.floor(Math.random() * 2 ) ;
+			var randomObj = ["'em'", "'px'", "'%'"];
+			
+			if ( opt === 0 ) {
+				return  Math.ceil ( Math.floor(Math.random() * fibo ) )  ;
+			} else {
+			
+				return  Math.ceil ( Math.floor( fibo / Math.random()  ) ) ;
+			}
+			
+		}
+
+
+		function columnMaker(k) {
+				for ( var i=0; i<20; i++ ) {
+				var main = $('.main');
+				var rectangle = $( '<div class="rectangle">' );
+				rectangle.append( '<p class="text">Josh Howard</p>' )
+						 .css( { 'width': Math.ceil( Fibo(i)  * 1.41428571429  )  + 'px',
+								 'height': Math.ceil( Fibo(k) ) + 'px',
+								 'font-size': optRandomizer( Fibo(i) )	+  '%' } )
+						 .insertBefore( $( '#toolbox' ) );
+
+				if( i < 4 )
+					$('.wrapper 01').append(rectangle);
+				else if( i < 8 )
+					$('.wrapper 02').append(rectangle);
+				else if( i < 12 )
+					$('.wrapper 03').append(rectangle);
+				else if ( i< 16 )
+					$('.wrapper 04').append(rectangle);
+
+
+				updateRectangle( rectangle, i, k ) ;
+		} }
+		
+		 
+		
+		
+		
+		function initPage( ) {	
+			for ( var k=0; k<20; k++)
+				columnMaker (k);
+
+			$('#btn-background').click(function() {
+				$('.rectangle').css('border','1px solid black');
+			});
+			$('#btn-randomize').click(function() {
+				    location.reload();
+			});
+
+
+		}
+		
+		
+		$( document ).ready( initPage );
+
+	</script>
+
+</head>
+
+<body>
+	<div class="wrapper"></div>
+	<div class="wrapper2"></div>
+	<div class="wrapper3"></div>
+	<div class="wrapper4"></div>
+	<div class="wrapper5"></div>
+	<div class="wrapper6"></div>
+	<div class="wrapper7"></div>
+	<div class="wrapper8"></div>
+
+	<div id="toolbox">
+		<button id="btn-background"> grids </button>
+		<button id="btn-randomize"> Make it Different! </button>
+	</div>
+	
+	<div class="main"> </div> 
+</body>
+
+</html>
